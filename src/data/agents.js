@@ -3,6 +3,7 @@ export const agents = [
     slug: "lead-generation",
     name: "Lead Generation Agent",
     tagline: "Our flagship agent",
+    live: true,
     short: "Finds, qualifies, and prioritizes prospects so your sales team opens with warm leads.",
     icon: "Target",
     overview:
