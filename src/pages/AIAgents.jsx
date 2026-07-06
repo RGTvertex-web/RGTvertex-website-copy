@@ -30,8 +30,7 @@ export default function AIAgents() {
               <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_1.3fr]">
                 <motion.div
                   initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-80px" }}
+                  animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
                   className="flex flex-col items-start gap-5"
                 >
@@ -91,8 +90,7 @@ export default function AIAgents() {
 
                 <motion.div
                   initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-80px" }}
+                  animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.1 }}
                   className="grid grid-cols-1 gap-6 sm:grid-cols-2"
                 >
