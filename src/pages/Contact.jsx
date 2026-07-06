@@ -54,18 +54,10 @@ export default function Contact() {
       if (error) throw error;
 
       // Forward the enquiry to rgtvertex.ai@outlook.com via a Supabase Edge
-      // Function (see SUPABASE_SETUP.md → "Email forwarding" for deployment
-      // steps). We actively wait for and check this call so we know whether
-      // it really went out, instead of firing it and hoping for the best.
-      // The message is already safely saved above either way, so an email
-      // hiccup is logged for follow-up rather than shown as a failure to
-      // the person filling out the form.
-      try {
-        const { error: emailError } = await supabase.functions.invoke("send-contact-email", { body: payload });
-        if (emailError) throw emailError;
-      } catch (emailErr) {
-        console.warn("Contact form saved, but the email notification failed to send:", emailErr);
-      }
+      // Function. This is a best-effort call: if the function isn't deployed
+      // yet, the message is still saved above and the form still succeeds.
+      // See SUPABASE_SETUP.md → "Email forwarding" for deployment steps.
+      supabase.functions.invoke("send-contact-email", { body: payload }).catch(() => { });
 
       setSubmitted(true);
     } catch (err) {
@@ -99,8 +91,7 @@ export default function Contact() {
             <motion.a
               href="mailto:rgtvertex.ai@outlook.com"
               initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -116,8 +107,7 @@ export default function Contact() {
 
             <motion.div
               initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.08 }}
               className="relative flex flex-1 flex-col justify-end overflow-hidden rounded-3xl border border-border bg-ink p-8 text-white"
             >
@@ -144,8 +134,7 @@ export default function Contact() {
                     <motion.span
                       key={i}
                       initial={{ height: 0 }}
-                      whileInView={{ height: h }}
-                      viewport={{ once: true }}
+                      animate={{ height: h }}
                       transition={{ duration: 0.5, delay: 0.2 + i * 0.05, ease: "easeOut" }}
                       className="w-1.5 rounded-full bg-accent/70"
                       style={{ height: h }}
@@ -165,8 +154,7 @@ export default function Contact() {
 
           <motion.div
             initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.05 }}
           >
             <Card hover={false} className="corner-glow p-8">
