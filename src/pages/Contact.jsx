@@ -54,10 +54,18 @@ export default function Contact() {
       if (error) throw error;
 
       // Forward the enquiry to rgtvertex.ai@outlook.com via a Supabase Edge
-      // Function. This is a best-effort call: if the function isn't deployed
-      // yet, the message is still saved above and the form still succeeds.
-      // See SUPABASE_SETUP.md → "Email forwarding" for deployment steps.
-      supabase.functions.invoke("send-contact-email", { body: payload }).catch(() => { });
+      // Function (see SUPABASE_SETUP.md → "Email forwarding" for deployment
+      // steps). We actively wait for and check this call so we know whether
+      // it really went out, instead of firing it and hoping for the best.
+      // The message is already safely saved above either way, so an email
+      // hiccup is logged for follow-up rather than shown as a failure to
+      // the person filling out the form.
+      try {
+        const { error: emailError } = await supabase.functions.invoke("send-contact-email", { body: payload });
+        if (emailError) throw emailError;
+      } catch (emailErr) {
+        console.warn("Contact form saved, but the email notification failed to send:", emailErr);
+      }
 
       setSubmitted(true);
     } catch (err) {
