@@ -39,6 +39,15 @@ export default function AIAgents() {
                     <span className="text-xs font-medium text-ink-faint">
                       Agent {String(i + 1).padStart(2, "0")} / {String(agents.length).padStart(2, "0")}
                     </span>
+                    {agent.live && (
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
+                        <span className="relative flex h-1.5 w-1.5">
+                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
+                          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                        </span>
+                        Live now
+                      </span>
+                    )}
                     {agent.tagline && (
                       <Pill className="border-accent/30 bg-accent-soft text-accent">
                         {agent.voiceEnabled && <Mic size={12} className="mr-1" strokeWidth={2} />}
@@ -46,8 +55,18 @@ export default function AIAgents() {
                       </Pill>
                     )}
                   </div>
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-border bg-bg-soft">
+                  <div
+                    className={`relative flex h-14 w-14 items-center justify-center rounded-2xl border bg-bg-soft ${
+                      agent.live ? "border-emerald-300 shadow-[0_0_0_4px_rgba(16,185,129,0.12)]" : "border-border"
+                    }`}
+                  >
                     <Icon name={agent.icon} size={26} strokeWidth={1.5} />
+                    {agent.live && (
+                      <span className="absolute -right-1 -top-1 flex h-3.5 w-3.5">
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                        <span className="relative inline-flex h-3.5 w-3.5 rounded-full border-2 border-white bg-emerald-500" />
+                      </span>
+                    )}
                   </div>
                   <h2 className="text-2xl font-semibold tracking-tight text-ink md:text-3xl">
                     {agent.name}

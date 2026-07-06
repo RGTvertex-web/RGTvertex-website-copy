@@ -61,26 +61,41 @@ export default function AgentsCircular() {
           </div>
         </foreignObject>
 
-        {nodes.map((node, i) => (
-          <foreignObject
-            key={node.slug}
-            x={node.x - NODE_SIZE / 2}
-            y={node.y - NODE_SIZE / 2}
-            width={NODE_SIZE}
-            height={NODE_SIZE}
-          >
-            <motion.div
-              xmlns="http://www.w3.org/1999/xhtml"
-              initial={{ opacity: 0, scale: 0.5 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.3 + i * 0.05, ease: "easeOut" }}
-              className="group flex h-10 w-10 items-center justify-center rounded-full border border-border bg-white shadow-[0_6px_18px_-10px_rgba(17,17,17,0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-glow"
+        {nodes.map((node, i) => {
+          const pad = node.live ? 8 : 0;
+          const boxSize = NODE_SIZE + pad * 2;
+          return (
+            <foreignObject
+              key={node.slug}
+              x={node.x - boxSize / 2}
+              y={node.y - boxSize / 2}
+              width={boxSize}
+              height={boxSize}
             >
-              <Icon name={node.icon} size={15} strokeWidth={1.7} className="text-ink transition-colors duration-300 group-hover:text-accent" />
-            </motion.div>
-          </foreignObject>
-        ))}
+              <div xmlns="http://www.w3.org/1999/xhtml" className="relative flex h-full w-full items-center justify-center">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: 0.3 + i * 0.05, ease: "easeOut" }}
+                  className={`group relative flex items-center justify-center rounded-full border bg-white shadow-[0_6px_18px_-10px_rgba(17,17,17,0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-glow ${
+                    node.live
+                      ? "h-10 w-10 border-emerald-300 shadow-[0_0_0_4px_rgba(16,185,129,0.14)]"
+                      : "h-10 w-10 border-border hover:border-accent/40"
+                  }`}
+                >
+                  <Icon name={node.icon} size={15} strokeWidth={1.7} className="text-ink transition-colors duration-300 group-hover:text-accent" />
+                  {node.live && (
+                    <span className="absolute -right-0.5 -top-0.5 flex h-3 w-3">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                      <span className="relative inline-flex h-3 w-3 rounded-full border-2 border-white bg-emerald-500" />
+                    </span>
+                  )}
+                </motion.div>
+              </div>
+            </foreignObject>
+          );
+        })}
       </svg>
     </div>
   );

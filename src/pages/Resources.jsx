@@ -164,7 +164,18 @@ export default function Resources() {
                       <Icon name={agent.icon} size={22} strokeWidth={1.6} />
                     </div>
                     <div>
-                      <h4 className="text-base font-semibold tracking-tight text-ink">{agent.name}</h4>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h4 className="text-base font-semibold tracking-tight text-ink">{agent.name}</h4>
+                        {agent.live && (
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700">
+                            <span className="relative flex h-1.5 w-1.5">
+                              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
+                              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                            </span>
+                            Live
+                          </span>
+                        )}
+                      </div>
                       <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-ink-soft">{agent.short}</p>
                     </div>
                     <a href={`/docs/${agent.slug}.pdf`} download className="shrink-0">
