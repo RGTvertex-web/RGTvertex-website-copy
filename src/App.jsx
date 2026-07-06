@@ -13,8 +13,14 @@ import Register from "@/pages/Register";
 import Dashboard from "@/pages/Dashboard";
 import NotFound from "@/pages/NotFound";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import LoadingScreen from "@/components/ui/LoadingScreen";
+import { useAuth } from "@/context/AuthContext";
 
 export default function App() {
+  const { loading } = useAuth();
+
+  if (loading) return <LoadingScreen persist />;
+
   return (
     <Routes>
       <Route element={<Layout />}>
