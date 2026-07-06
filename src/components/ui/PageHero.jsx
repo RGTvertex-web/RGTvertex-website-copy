@@ -15,6 +15,19 @@ export default function PageHero({
       <div className="pointer-events-none absolute inset-0 z-0">
         {bgImage && (
           <>
+            {/*
+              Hero background images should be WebP/JPEG under ~150 KB.
+              Current PNGs are 700 KB–1 MB, causing slow first-paint.
+              TODO: compress with `npx sharp-cli` or Squoosh before deploy.
+            */}
+            {/* Hidden img so the browser preloads the background eagerly */}
+            <img
+              src={bgImage}
+              alt=""
+              aria-hidden="true"
+              fetchPriority="high"
+              className="pointer-events-none absolute h-0 w-0 opacity-0"
+            />
             <div
               className={`absolute inset-0 opacity-100 transition-all duration-300 ${bgClass} ${bgBlur}`}
               style={{ backgroundImage: `url('${bgImage}')` }}
