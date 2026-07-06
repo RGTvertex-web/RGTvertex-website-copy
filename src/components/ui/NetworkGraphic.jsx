@@ -26,8 +26,7 @@ export default function NetworkGraphic({ className = "" }) {
             stroke="rgba(255,255,255,0.22)"
             strokeWidth="1"
             initial={{ pathLength: 0, opacity: 0 }}
-            whileInView={{ pathLength: 1, opacity: 1 }}
-            viewport={{ once: true }}
+            animate={{ pathLength: 1, opacity: 1 }}
             transition={{ duration: 0.9, delay: 0.1 + i * 0.06, ease: "easeInOut" }}
           />
         ))}
@@ -37,10 +36,8 @@ export default function NetworkGraphic({ className = "" }) {
             cx={n.x} cy={n.y} r={n.r}
             fill={i === 6 ? "#ffffff" : "rgba(255,255,255,0.7)"}
             initial={{ scale: 0, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            viewport={{ once: true }}
+            animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.4, delay: 0.3 + i * 0.07, ease: "easeOut" }}
-            animate={{ y: [n.y, n.y - 4, n.y] }}
             style={{ transformOrigin: `${n.x}px ${n.y}px` }}
           />
         ))}
