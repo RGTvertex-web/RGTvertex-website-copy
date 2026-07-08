@@ -188,11 +188,18 @@ export default function Resources() {
                       </div>
                       <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-ink-soft">{agent.short}</p>
                     </div>
-                    <a href={`/docs/${agent.slug}.pdf`} download onClick={handleDownloadClick} className="shrink-0">
+                    <a 
+                      href={agent.slug === "lead-generation" ? "/RGTVetrex_Brochure.html" : `/docs/${agent.slug}.pdf`} 
+                      download={agent.slug === "lead-generation" ? undefined : true} 
+                      target={agent.slug === "lead-generation" ? "_blank" : undefined}
+                      rel={agent.slug === "lead-generation" ? "noopener noreferrer" : undefined}
+                      onClick={handleDownloadClick} 
+                      className="shrink-0"
+                    >
                       <Button variant="secondary" size="sm" className="whitespace-nowrap">
                         <span className="inline-flex items-center gap-2">
-                          {user ? <Download size={14} /> : <Lock size={14} />}
-                          {user ? "Download Document" : "Log in to download"}
+                          {user ? (agent.slug === "lead-generation" ? <BookOpen size={14} /> : <Download size={14} />) : <Lock size={14} />}
+                          {user ? (agent.slug === "lead-generation" ? "View Brochure" : "Download Document") : (agent.slug === "lead-generation" ? "Log in to view" : "Log in to download")}
                         </span>
                       </Button>
                     </a>
