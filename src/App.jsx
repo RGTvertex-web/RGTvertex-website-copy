@@ -10,17 +10,12 @@ import Privacy from "@/pages/Privacy";
 import Terms from "@/pages/Terms";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
+import ResetPassword from "@/pages/ResetPassword";
 import Dashboard from "@/pages/Dashboard";
 import NotFound from "@/pages/NotFound";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
-import LoadingScreen from "@/components/ui/LoadingScreen";
-import { useAuth } from "@/context/AuthContext";
 
 export default function App() {
-  const { loading } = useAuth();
-
-  if (loading) return <LoadingScreen persist />;
-
   return (
     <Routes>
       <Route element={<Layout />}>
@@ -34,6 +29,7 @@ export default function App() {
         <Route path="/terms" element={<Terms />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route
           path="/dashboard"
           element={
