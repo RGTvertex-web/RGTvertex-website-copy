@@ -13,12 +13,7 @@ export function AuthProvider({ children }) {
       return;
     }
 
-    // Safety timeout — if Supabase takes too long (e.g. network issues on
-    // Vercel cold starts), don't leave the app stuck on the loading screen.
-    const safetyTimer = setTimeout(() => setLoading(false), 3000);
-
     supabase.auth.getSession().then(({ data }) => {
-      clearTimeout(safetyTimer);
       setSession(data.session);
       setLoading(false);
     });
@@ -27,10 +22,7 @@ export function AuthProvider({ children }) {
       setSession(newSession);
     });
 
-    return () => {
-      clearTimeout(safetyTimer);
-      listener.subscription.unsubscribe();
-    };
+    return () => listener.subscription.unsubscribe();
   }, []);
 
   // Always turns whatever Supabase (or a network failure) throws into a
@@ -97,8 +89,20 @@ export function AuthProvider({ children }) {
     if (!isSupabaseConfigured) return { error: { message: "Supabase is not configured yet." } };
     try {
       const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/login`,
+        redirectTo: `${window.location.origin}/reset-password`,
       });
+      return { data, error: normalizeError(error) };
+    } catch (err) {
+      return { error: normalizeError(err) };
+    }
+  };
+
+  // Used on the /reset-password page once someone has clicked the emailed
+  // reset link (which signs them into a short-lived recovery session).
+  const updatePassword = async (newPassword) => {
+    if (!isSupabaseConfigured) return { error: { message: "Supabase is not configured yet." } };
+    try {
+      const { data, error } = await supabase.auth.updateUser({ password: newPassword });
       return { data, error: normalizeError(error) };
     } catch (err) {
       return { error: normalizeError(err) };
@@ -113,6 +117,7 @@ export function AuthProvider({ children }) {
     signIn,
     signOut,
     resetPassword,
+    updatePassword,
     isSupabaseConfigured,
   };
 
