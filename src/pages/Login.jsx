@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Lock, Mail, AlertCircle, Loader2 } from "lucide-react";
+import { Lock, Mail, AlertCircle, Loader2, Eye, EyeOff } from "lucide-react";
 import PageHero from "@/components/ui/PageHero";
 import { Section, Card } from "@/components/ui/Primitives";
 import Button from "@/components/ui/Button";
@@ -14,6 +14,7 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [mode, setMode] = useState("login"); // login | forgot
   const [status, setStatus] = useState("idle"); // idle | submitting | error
   const [errorMessage, setErrorMessage] = useState("");
@@ -103,7 +104,15 @@ export default function Login() {
                   Password
                   <div className="relative">
                     <Lock size={16} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-faint" />
-                    <input required type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" className="w-full rounded-xl border border-border bg-white py-3 pl-10 pr-4 text-sm focus:border-ink/40" />
+                    <input required type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" className="w-full rounded-xl border border-border bg-white py-3 pl-10 pr-11 text-sm focus:border-ink/40" />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword((v) => !v)}
+                      aria-label={showPassword ? "Hide password" : "Show password"}
+                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-ink-faint hover:text-ink"
+                    >
+                      {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
                   </div>
                 </label>
                 <div className="flex items-center justify-between text-sm">
