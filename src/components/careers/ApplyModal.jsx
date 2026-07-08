@@ -68,7 +68,7 @@ export default function ApplyModal({ job, onClose }) {
 
       const { data: publicUrlData } = supabase.storage.from(RESUME_BUCKET).getPublicUrl(safeName);
 
-      const { error: insertError } = await supabase.from("job_applications").insert({
+      const applicationPayload = {
         job_role: job.role,
         name: form.name,
         email: form.email,
@@ -78,9 +78,25 @@ export default function ApplyModal({ job, onClose }) {
         duration: form.duration,
         resume_url: publicUrlData?.publicUrl ?? null,
         status: "new",
-      });
+      };
+
+      const { error: insertError } = await supabase.from("job_applications").insert(applicationPayload);
 
       if (insertError) throw insertError;
+
+      // Forward the application to rgtvertex.ai@outlook.com via a Supabase
+      // Edge Function (see SUPABASE_SETUP.md -> "Email forwarding"). We
+      // await this and log any failure, but the application is already
+      // safely saved above either way, so an email hiccup doesn't block
+      // the applicant from seeing a successful submission.
+      try {
+        const { error: emailError } = await supabase.functions.invoke("send-application-email", {
+          body: applicationPayload,
+        });
+        if (emailError) throw emailError;
+      } catch (emailErr) {
+        console.warn("Application saved, but the email notification failed to send:", emailErr);
+      }
 
       setStatus("success");
     } catch (err) {
