@@ -1,38 +1,18 @@
 export const jobs = [
   {
-    slug: "business-analyst-intern",
-    role: "Business Analyst Intern",
-    location: "Remote",
-    type: "Internship",
-    duration: ["3 months", "6 months"],
-    description:
-      "Work closely with product, engineering, and client-facing teams to help translate business problems into clear requirements for our AI agents. You'll learn how a real AI product gets built, one requirement at a time, with mentorship from the team throughout.",
-    skills: [
-      "Strong analytical and problem-solving mindset",
-      "Comfortable with Excel/Sheets and basic SQL",
-      "Clear written and verbal communication",
-      "Ability to read and interpret data to support decisions",
-    ],
-    responsibilities: [
-      "Help gather and document business requirements from stakeholders",
-      "Analyze existing workflows to spot automation opportunities",
-      "Assist in preparing reports, dashboards, and process documentation",
-      "Support QA and validation of agent outputs against requirements",
-    ],
-  },
-  {
     slug: "ai-engineering-intern",
     role: "AI Engineering Intern",
+    experience: "Student / New grad",
     location: "Remote",
     type: "Internship",
-    duration: ["3 months", "6 months"],
+    active: true,
     description:
       "A hands-on internship for someone looking to break into applied AI. You'll work directly with the engineering team on real AI agent features, from prompt design to evaluation, with code review and mentorship every step of the way.",
     skills: [
       "Basic Python and a genuine interest in LLMs and AI agents",
       "Comfortable learning new tools and frameworks quickly",
       "Clear communication and a habit of asking good questions",
-      "Familiarity with version control (Git) and basic debugging",
+      "Currently studying or recently graduated in a related field",
     ],
     responsibilities: [
       "Assist with building and testing AI agent features under mentorship",
@@ -44,16 +24,17 @@ export const jobs = [
   {
     slug: "social-media-intern",
     role: "Social Media Intern",
+    experience: "Student / New grad",
     location: "Remote",
     type: "Internship",
-    duration: ["3 months", "6 months"],
+    active: true,
     description:
       "Help shape the voice of RGTvertex across LinkedIn, Instagram, and YouTube. You'll assist in planning and creating content that shows what an AI workforce actually looks like in practice, guided by our marketing team.",
     skills: [
       "Genuine interest in social platform trends and formats",
       "Basic content design (Canva or similar)",
       "Strong writing and copywriting ability",
-      "Consistency in posting and tracking engagement over time",
+      "Currently studying or recently graduated in a related field",
     ],
     responsibilities: [
       "Assist in planning and maintaining a content calendar across platforms",
@@ -63,45 +44,93 @@ export const jobs = [
     ],
   },
   {
-    slug: "content-creator-intern",
-    role: "Content Creator Intern",
+    slug: "sales-development-intern",
+    role: "Sales Development Intern",
+    experience: "Student / New grad",
     location: "Remote",
     type: "Internship",
-    duration: ["3 months", "6 months"],
+    active: true,
+    description:
+      "Help RGTvertex reach the businesses that need an AI workforce. You'll learn the fundamentals of enterprise sales, from outreach to qualifying interest to supporting demos, working closely with our sales and leadership team.",
+    skills: [
+      "Strong interpersonal skills and comfort with cold outreach",
+      "Clear, confident written and verbal communication",
+      "Familiarity with CRM tools (HubSpot, Salesforce, or similar) is a plus",
+      "Resilient, coachable, and comfortable handling objections",
+      "Currently studying or recently graduated in business, marketing, or a related field",
+    ],
+    responsibilities: [
+      "Research and identify potential business prospects",
+      "Assist with outbound outreach via email and LinkedIn",
+      "Qualify inbound interest and help schedule discovery calls",
+      "Maintain accurate records of prospects and conversations in the CRM",
+      "Support the sales team in preparing demos and follow-ups",
+    ],
+  },
+  {
+    slug: "hr-intern",
+    role: "HR Intern",
+    experience: "Student / New grad",
+    location: "Remote",
+    type: "Internship",
+    active: true,
+    description:
+      "Support the people side of a fast-moving AI company. You'll help run our hiring process end to end, from screening applications to keeping candidates informed, working closely with the team behind every open role.",
+    skills: [
+      "Strong organizational skills and attention to detail",
+      "Clear, friendly written communication",
+      "Comfortable managing multiple conversations and timelines at once",
+      "Currently studying or recently graduated in HR, business, or a related field",
+    ],
+    responsibilities: [
+      "Screen incoming applications against role requirements",
+      "Help schedule and coordinate interviews across candidates and the team",
+      "Keep candidates informed and up to date at every stage",
+      "Support onboarding documentation for new hires and interns",
+    ],
+  },
+  {
+    slug: "business-analyst-intern",
+    role: "Business Analyst Intern",
+    experience: "Student / New grad",
+    location: "Remote",
+    type: "Internship",
+    active: false,
+    description:
+      "Work closely with product, engineering, and client-facing teams to help translate business problems into clear requirements for our AI agents. You'll learn how a real AI product gets built, one requirement at a time, with mentorship from the team throughout.",
+    skills: [
+      "Strong analytical and problem-solving mindset",
+      "Comfortable with Excel/Sheets and basic SQL",
+      "Clear written and verbal communication",
+      "Currently studying or recently graduated in a related field",
+    ],
+    responsibilities: [
+      "Help gather and document business requirements from stakeholders",
+      "Analyze existing workflows to spot automation opportunities",
+      "Assist in preparing reports, dashboards, and process documentation",
+      "Support QA and validation of agent outputs against requirements",
+    ],
+  },
+  {
+    slug: "content-creator-intern",
+    role: "Content Creator Intern",
+    experience: "Student / New grad",
+    location: "Remote",
+    type: "Internship",
+    active: false,
     description:
       "Help create written, visual, and video content that explains AI agents in plain language, from blog posts to explainer videos to product walkthroughs, working closely with our content team.",
     skills: [
       "Strong storytelling and writing ability",
       "Basic video editing (CapCut, Premiere, or similar)",
       "Ability to simplify technical concepts for a general audience",
-      "Eye for pacing and visual detail in short-form video",
+      "Currently studying or recently graduated in a related field",
     ],
     responsibilities: [
       "Assist in writing blog posts, case studies, and product explainers",
       "Help script and edit short-form video content",
       "Support the team in translating product updates into content",
       "Help repurpose long-form content into social-ready formats",
-    ],
-  },
-  {
-    slug: "sales-intern",
-    role: "Sales Intern",
-    location: "Remote",
-    type: "Internship",
-    duration: ["3 months", "6 months"],
-    description:
-      "Help bring RGTvertex's AI agents to the businesses that need them. You'll work on outbound outreach, discovery calls, and pipeline building, learning the full sales motion directly from the founding team.",
-    skills: [
-      "Strong written and verbal communication",
-      "Comfortable with cold outreach (email, LinkedIn, calls)",
-      "Basic understanding of B2B sales or willingness to learn fast",
-      "Persistence and comfort with rejection during outreach",
-    ],
-    responsibilities: [
-      "Generate and qualify leads through outbound prospecting",
-      "Book and support discovery calls with prospective clients",
-      "Maintain accurate pipeline data in the CRM",
-      "Follow up consistently to help move deals forward",
     ],
   },
 ];
