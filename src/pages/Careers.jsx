@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { GraduationCap, MapPin, Clock, CalendarClock, ChevronDown, CheckCircle2, Clock3 } from "lucide-react";
 import PageHero from "@/components/ui/PageHero";
@@ -9,12 +9,11 @@ import ApplyModal from "@/components/careers/ApplyModal";
 import { jobs } from "@/data/careers";
 
 // ─────────────────────────────────────────────────────────────────────────
-// APPLICATIONS TOGGLE
-// We're getting more applications than we can process right now, so new
-// applications are paused. To reopen applications later, just change this
-// one value back to `true` — nothing else in this file needs to change.
+// Each role's `active` flag lives in src/data/careers.js, not here.
+// Set a role's `active: true` to accept applications for it, or
+// `active: false` to show "Applications will open soon" for that role
+// specifically — no other roles are affected.
 // ─────────────────────────────────────────────────────────────────────────
-const APPLICATIONS_OPEN = false;
 
 function formatDuration(duration) {
   if (Array.isArray(duration)) return duration.join(" / ");
@@ -23,14 +22,21 @@ function formatDuration(duration) {
 
 function JobCard({ job, isOpen, onToggle, onApply }) {
   return (
-    <Card hover={false} className="overflow-hidden p-0">
+    <Card hover={false} className={`overflow-hidden p-0 ${!job.active ? "opacity-70" : ""}`}>
       <button
         onClick={onToggle}
         aria-expanded={isOpen}
         className="flex w-full flex-col gap-3 p-6 text-left sm:flex-row sm:items-center sm:justify-between sm:gap-6"
       >
         <div className="flex flex-col gap-2">
-          <h3 className="text-lg font-semibold tracking-tight text-ink">{job.role}</h3>
+          <div className="flex flex-wrap items-center gap-2">
+            <h3 className="text-lg font-semibold tracking-tight text-ink">{job.role}</h3>
+            {!job.active && (
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-bg-soft px-2.5 py-0.5 text-[11px] font-semibold text-ink-faint">
+                <Clock3 size={11} /> Opening soon
+              </span>
+            )}
+          </div>
           <div className="flex flex-wrap items-center gap-2">
             <Pill className="gap-1.5"><GraduationCap size={12} /> Student / New grad</Pill>
             <Pill className="gap-1.5"><MapPin size={12} /> {job.location}</Pill>
@@ -83,7 +89,7 @@ function JobCard({ job, isOpen, onToggle, onApply }) {
                 </div>
               </div>
 
-              {APPLICATIONS_OPEN ? (
+              {job.active ? (
                 <Button onClick={() => onApply(job)} size="sm" className="self-start">
                   Apply now
                 </Button>
@@ -105,16 +111,23 @@ export default function Careers() {
   const [openSlug, setOpenSlug] = useState(jobs[0]?.slug ?? null);
   const [applyingTo, setApplyingTo] = useState(null);
 
+  // Active roles first, so open positions are what people see immediately.
+  const sortedJobs = useMemo(
+    () => [...jobs].sort((a, b) => Number(b.active) - Number(a.active)),
+    []
+  );
+  const anyActive = jobs.some((j) => j.active);
+
   return (
     <>
       <Seo
         title="Careers — RGTvertex"
-        description="Join RGTvertex as an intern and help build the AI workforce of the future. Explore open, fully remote internships in engineering, analytics, content, and social media."
+        description="Join RGTvertex as an intern and help build the AI workforce of the future. Explore open, fully remote internships in engineering, sales, HR, and social media."
       />
       <PageHero
         eyebrow="Careers"
         title="Kickstart your career with a remote internship."
-        description="We're a small, fast-moving team shipping AI agents that businesses actually rely on. Every open role right now is a fully remote internship, here's where we could use you."
+        description="We're a small, fast-moving team shipping AI agents that businesses actually rely on. Every role here is a fully remote internship, here's where we could use you."
         bgImage="/careers-hero.png"
         bgClass="bg-cover bg-center sm:bg-[length:auto_92%] sm:bg-right bg-no-repeat"
       />
@@ -129,7 +142,7 @@ export default function Careers() {
         >
           <div className="pointer-events-none absolute inset-0 bg-grid opacity-[0.06]" />
           <div className="relative flex shrink-0 items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5">
-            {APPLICATIONS_OPEN ? (
+            {anyActive ? (
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
@@ -138,14 +151,15 @@ export default function Careers() {
               <Clock3 size={13} className="text-white/80" />
             )}
             <span className="text-xs font-semibold uppercase tracking-[0.08em] text-white">
-              {APPLICATIONS_OPEN ? "Now hiring" : "Applications paused"}
+              {anyActive ? "" : "Applications paused"}
             </span>
           </div>
           <p className="relative text-sm font-medium leading-relaxed text-white/90">
-            {APPLICATIONS_OPEN ? (
+            {anyActive ? (
               <>
-                Every listed role below is a <span className="text-white">fully remote internship</span>,
-                built for students and new grads ready to work on real AI products.
+                We're actively hiring for select roles below, all{" "}
+                <span className="text-white">fully remote internships</span> built for students and new
+                grads. Other roles will reopen soon.
               </>
             ) : (
               <>
@@ -159,7 +173,7 @@ export default function Careers() {
 
         <div className="mx-auto flex max-w-3xl flex-col gap-4">
           <AnimatePresence mode="popLayout">
-            {jobs.map((job) => (
+            {sortedJobs.map((job) => (
               <motion.div
                 key={job.slug}
                 layout
@@ -180,7 +194,7 @@ export default function Careers() {
         </div>
       </Section>
 
-      {APPLICATIONS_OPEN && (
+      {anyActive && (
         <Section className="border-t border-border bg-bg-soft-2 !py-16">
           <div className="mx-auto flex max-w-2xl flex-col items-center gap-3 text-center">
             <h2 className="text-2xl font-semibold tracking-tight text-ink">Don't see a role that fits?</h2>
@@ -195,7 +209,7 @@ export default function Careers() {
         </Section>
       )}
 
-      {APPLICATIONS_OPEN && applyingTo && <ApplyModal job={applyingTo} onClose={() => setApplyingTo(null)} />}
+      {applyingTo?.active && <ApplyModal job={applyingTo} onClose={() => setApplyingTo(null)} />}
     </>
   );
 }
