@@ -5,7 +5,7 @@ export const jobs = [
     experience: "Student / New grad",
     location: "Remote",
     type: "Internship",
-    active: true,
+    active: false,
     description:
       "A hands-on internship for someone looking to break into applied AI. You'll work directly with the engineering team on real AI agent features, from prompt design to evaluation, with code review and mentorship every step of the way.",
     skills: [
@@ -27,7 +27,7 @@ export const jobs = [
     experience: "Student / New grad",
     location: "Remote",
     type: "Internship",
-    active: true,
+    active: false,
     description:
       "Help shape the voice of RGTvertex across LinkedIn, Instagram, and YouTube. You'll assist in planning and creating content that shows what an AI workforce actually looks like in practice, guided by our marketing team.",
     skills: [
@@ -49,7 +49,7 @@ export const jobs = [
     experience: "Student / New grad",
     location: "Remote",
     type: "Internship",
-    active: true,
+    active: false,
     description:
       "Help RGTvertex reach the businesses that need an AI workforce. You'll learn the fundamentals of enterprise sales, from outreach to qualifying interest to supporting demos, working closely with our sales and leadership team.",
     skills: [
@@ -73,7 +73,7 @@ export const jobs = [
     experience: "Student / New grad",
     location: "Remote",
     type: "Internship",
-    active: true,
+    active: false,
     description:
       "Support the people side of a fast-moving AI company. You'll help run our hiring process end to end, from screening applications to keeping candidates informed, working closely with the team behind every open role.",
     skills: [
