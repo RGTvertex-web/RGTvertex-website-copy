@@ -189,7 +189,7 @@ export default function Resources() {
                       <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-ink-soft">{agent.short}</p>
                     </div>
                     <a 
-                      href={agent.slug === "lead-generation" ? "/RGTVetrex_Brochure.html" : `/docs/${agent.slug}.pdf`} 
+                      href={agent.slug === "lead-generation" ? "brochure/RGTVetrex_Brochure.html" : `/docs/${agent.slug}.pdf`} 
                       download={agent.slug === "lead-generation" ? undefined : true} 
                       target={agent.slug === "lead-generation" ? "_blank" : undefined}
                       rel={agent.slug === "lead-generation" ? "noopener noreferrer" : undefined}
